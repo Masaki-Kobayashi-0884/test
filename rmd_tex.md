@@ -1,6 +1,6 @@
-# R Markdownによる$\TeX$文章作成
+# R MarkdownによるTeX文章作成
 
-$\TeX$を使ったレポートなどを簡単に作成できるように、環境設定を行います。
+TeXを使ったレポートなどを簡単に作成できるように、環境設定を行います。
 
 基本的にWindows向けですが、適宜読み替えれば他OSでも使えるはずです（未検証）。
 
@@ -32,7 +32,7 @@ winget install GhostScript
 
 GhostScriptにはパスが通ってないので手動で設定する必要があります。[この記事](https://www.atmarkit.co.jp/ait/articles/1805/11/news035.html)などを参考にして、インストールしたGhostScriptのbinフォルダをPathに追加します。私の場合は`C:\Program Files\gs\gs9.54.0\bin`を追加しました。
 
-## 2. $\TeX$のインストール
+## 2. TeXのインストール
 
 公式版のTeX Liveは非常に重いので**Tinytex**を利用します。TinytexはTeX Liveから必要最小限の機能を抜き出したものです。
 
