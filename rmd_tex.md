@@ -1,4 +1,4 @@
-# R MarkdownによるTeX文章作成
+# R Markdownによる$\TeX$文章作成
 
 TeXを使ったレポートなどを簡単に作成できるように、環境設定を行います。
 
@@ -36,7 +36,7 @@ GhostScriptにはパスが通ってないので手動で設定する必要があ
 
 公式版のTeX Liveは非常に重いので**Tinytex**を利用します。TinytexはTeX Liveから必要最小限の機能を抜き出したものです。
 
-RStudioを起動し、以下のコマンドを実行してください。
+RStudioを起動し、以下のスクリプトを実行してください。
 
 ```r
 install.packages("tintex" dependencies = TRUE)
@@ -46,9 +46,21 @@ tinytex::tlmgr_install("texlive-msgmtranslations")
 tinytex::tlmgr_install("haranoaji")
 ```
 
-以上で環境設定は完了です。一旦RStudioを再起動してください。
+以上で環境設定は完了です。
+
+```r
+tinytex::lualatex("path/to/file.tex")
+```
+
+などとすると$\TeX$ファイルをPDFに変換することができます。
+
+通常の$\TeX$環境としても利用することができ、`tlmgr --version`などのコマンドも動作します。
 
 ## 3. Rmdファイルの作成
+
+$\TeX$ファイルを簡単に記述するために**R Markdown**を使います。
+
+R MarkdownとはRの出力をMarkdownにテキストをとして貼り付ける`knitr`パッケージと、Markdownを様々な形式 $(\ni\TeX)$に変換する事ができる`Pandoc`を組み合わせたもので、直感的な書き方で文章の構造を定義することができます。
 
 Rstudioの`File`から、`New File -> R Markdown -> PDF -> OK`とすると新しいRmdファイルが開かれます。
 
