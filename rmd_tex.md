@@ -176,6 +176,10 @@ print("Hello World")
 
 ## Enjoy!
 
+サンプル
+
+* [第7章 推定論](https://github.com/bayashi-cl/Docs/blob/master/chap7.rmd)
+
 参考文献
 
 * [R Markdown入門](https://kazutan.github.io/kazutanR/Rmd_intro.html)

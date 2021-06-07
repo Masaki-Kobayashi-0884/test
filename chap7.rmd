@@ -1,0 +1,226 @@
+---
+title: "第7章 推定論"
+subtitle: "1, 2節"
+author: "bayashi_cl"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    latex_engine: lualatex
+documentclass: bxjsarticle
+classoption: pandoc
+---
+
+# 7.1 点推定量の枠組
+
+統計量$T=\delta(X)$から、未知パラメータ$\theta$ or $\gamma(\theta)$を推定
+
+$\delta(X)$が確率変数であることから**誤差を最小化**したい。
+
+## 推定量
+
+* 推定方式のこと
+
+$\delta(X)=\hat{\theta}(X)$ or $\delta(X)=\hat{\gamma}(X)$で表す。
+
+## 推定値
+
+* 推定量の実現値
+
+すべての要素について(平均二乗)誤差を最小化はできない
+
+## 不偏推定量
+
+* $\hat{\theta}$の期待値が$\theta$と一致する推定量
+
+$$E_\theta[\hat{\theta}(X)]=\theta,\forall\theta\tag{7.1}$$
+
+定数による推定を排除できる
+
+非不偏推定量の**バイアス**$b(\theta)=E_\theta[\hat{\theta}]-\theta$を考えると平均二乗誤差は分散と誤差の２乗に分解できる。
+
+$$E_\theta[(\hat{\theta}-\theta)^2]=\textrm{Var}_\theta[\hat{\theta}]+b(\theta)^2\tag{7.3}$$
+
+$\because E_\theta\left[\hat{\theta}-E_\theta[\hat{\theta}]\right]=(\hat{\theta}\text{の偏差の期待値})=0$
+
+バイアスを小さくすれば２乗誤差も小さくなりそう？
+
+$\to$そうではなかったときには**最尤法**を使う
+
+
+# 7.2 不偏推定量とフィッシャー情報量
+
+## 一様最小分散不偏推定量 (UMVU)
+
+* 他のどんな推定量よりも分散が小さくなる
+* 存在すれば推定量として適切
+
+不偏推定量がUMVUであることを示したい
+
+1. クラメル・ラオの不等式を使う方法
+1. 完備情報統計量の理論を使う方法
+
+## フィッシャー情報量 $=I_n(\theta)$
+
+$X=(X_1,\ldots,X_n)$の同時密度関数$f(x,\theta)$の
+
+1. 対数を取り(対数尤度)
+1. $\theta$で微分したものの(ここまでが$l'(\theta,x)$)
+1. 2乗の期待値。
+
+すなわち、
+
+$$I_n(\theta)=E_\theta[(l'(\theta,X))^2]$$
+
+### $n=1$のとき
+
+$X_1,\ldots,X_n$が$i.i.d.$のとき、$I_n(\theta)=nI_1(\theta)$
+
+$f(x,\theta)$は密度関数であることから
+
+$$\int_{-\infty}^{\infty} \frac{\partial f(x,\theta)}{\partial\theta}dx=0\tag{7.9}$$
+
+また、分子分母に$f(x,\theta)$をかけて、
+
+$$
+\begin{aligned}
+    \int_{-\infty}^{\infty} \frac{\partial f(x,\theta)}{\partial\theta}dx&=\int_{-\infty}^{\infty} \frac{\partial f(x,\theta)/\partial\theta}{f(x,\theta)}f(x,\theta)dx\\
+    &=\int_{-\infty}^{\infty}\frac{\partial\log f(x,\theta)}{\partial\theta}dx\\
+    &=E_\theta[l'(\theta,X)]=0
+\end{aligned}\tag{7.10}
+$$
+
+であるから、
+
+$$I_n(\theta)=E_\theta[(l'(\theta,X))^2]-E_\theta[l'(\theta,X)]^2=\textrm{Var}_\theta[l'(\theta,X)]\tag{7.11}$$
+
+よって、
+
+$$
+\begin{aligned}
+    I_n(\theta)&=\textrm{Var}\left[\sum_{i=1}^nl_1'(\theta,X_i)\right]\\
+    &=nI_1(\theta)
+\end{aligned}\tag{7.8}
+$$
+
+## クラメル・ラオの不等式
+
+不偏推定量の分散 $\geq$ フィッシャー情報量の逆数
+
+$$\textrm{Var}[\hat{\theta}]\geq\frac{1}{I_n(\theta)}\tag{7.14}$$
+
+### 証明
+
+$$
+\begin{aligned}
+    \textrm{Cov}\left[\hat{\theta}(X),l'(\theta,X)\right]&=E_\theta\left[(\hat{\theta}(X)-E[\hat{\theta}(X)])(l'(\theta,X)-E[l'(\theta,X)])\right]\\
+    &=E_\theta\left[(\hat{\theta}(X)-\theta)l'(\theta,X)\right]\\
+    &=E_\theta\left[\hat{\theta}(X)l'(\theta,X)\right]-E_\theta\left[\theta l'(\theta,X)\right]\\
+    &=E_\theta\left[\hat{\theta}(X)l'(\theta,X)\right]=1
+\end{aligned}\tag{7.15,16}
+$$
+
+よって
+
+$$1\leq\textrm{Var}[\hat{\theta}(X)]I_n(X)$$
+
+バイアスがある場合も、$E_\theta\left[\hat{\theta}(X)l'(\theta,X)\right]=1+b'(\theta)$から、
+
+$$\textrm{Var}[\hat{\theta}]\geq\frac{(1+b'(\theta))^2}{I_n(\theta)}\tag{7.19}$$
+
+* 微分と積分が交換できるときにのみ成立
+* 一様分布などでは成り立たない。
+* 等号のとき、不偏推定量は**UMVU**
+
+### 2項分布
+
+$X\sim\textrm{Bin}(n,p)$とすると、$p$ の推定量 $\hat{p}=\frac{X}{n}$ は $E_p[\hat{p}]=p$ より不偏推定量。また、$\textrm{Var}[\hat{p}] = \frac{p(1-p)}{n}$
+
+ここで、
+
+$$l'(p,X)=\frac{x-np}{p(1-p)}$$
+
+より、
+
+$$I(p)=E[(l'(p,X))^2]=\frac{n}{p(1-p)}=\frac{1}{\textrm{Var}[\hat{p}]}$$
+
+よって$\hat{p}$は**UMVU**
+
+### 正規分布
+
+同様に
+
+$$l'(\mu,X)=\frac{x-\mu}{\sigma^2}$$
+
+$$I(\mu)=\frac{1}{\sigma^2}$$
+
+より
+
+$$\frac{1}{I_n(\mu)}=\frac{1}{nI_1(\mu)}=\frac{\sigma^2}{n}=\textrm{Var}[\bar{X}]$$
+
+よって$\mu$の推定値として$\bar{X}$は**UMVU**
+
+ポアソン分布, ガンマ分布にも応用可能
+
+## フィッシャー情報量の簡単化
+
+フィッシャー情報量に対数尤度関数の二階微分を使うと、
+
+$$l''(\theta,x)=\frac{\partial^2f(x,\theta)/\partial\theta^2}{f(x,\theta)}-\left(\frac{\partial f(x,\theta)/\partial\theta}{f(x,\theta)}\right)^2$$
+
+$\because$ 商の微分公式
+
+よって
+
+$$E_\theta[l''(\theta,X)]=\int_{-\infty}^{\infty}\frac{\partial^2}{\partial\theta^2}f(x,\theta)dx-I(\theta)$$
+
+微分と積分の交換の仮定から
+
+$$\int_{-\infty}^{\infty}\frac{\partial^2}{\partial\theta^2}f(x,\theta)dx=0$$
+
+ゆえに
+
+$$I(\theta)=E_\theta[-l''(\theta,X)]$$
+
+これを使うと正規分布の$\mu$のフィッシャー情報量は、
+
+$$I(\mu)=E_\theta[-l''(\mu,X)]=\frac{1}{\sigma^2}$$
+
+## UMVUが証明できない例
+
+正規分布の母平均が未知の場合の母分散の推定。
+
+標本分散$s^2$は$\sigma^2$の不偏推定量
+
+$\sigma^2=\tau$とおき、$\tau$のフィッシャー情報量を求める。
+
+$$l(\tau,x)=-\frac{(x-\mu)^2}{2\tau}-\frac{1}{2}\log(2\pi\tau)$$
+
+これを二階微分して
+
+$$I(\tau)=E[-l''(\tau,X)]=\frac{1}{2\tau^2}$$
+
+よって分散の下限は
+
+$$\frac{1}{nI(\sigma^2)}=\frac{2\sigma^4}{n}$$
+
+しかし$s^2$の分散は
+
+$$\textrm{Var}[s^2]=\frac{2\sigma^4}{n-1}$$
+
+であることから($\because$積率母関数より)UMVUが**示せない**。
+
+<!-- # 7.3 完備十分統計量に基づく不偏推定量
+
+$T$が完備十分統計量なら不偏推定量は一意に定まり、それは**UMVU**
+
+クラメル・ラオの不等式を使ってUMVUであることが証明できる不偏推定量$\Rightarrow$完備十分統計量でUMVUであることが証明できる。
+
+完備十分統計量のほうが議論として**強い**
+
+# 7.4 不偏推定量の問題点
+
+* UMVUが存在しなかったり不合理だったりすることがある。
+    - 正規分布の$\mu^2$の推定量が負になることがある。
+* 母数の変換に対して不変ではない。
+    - $\hat{\theta}$が$\theta$の不偏推定量だったとしても$\gamma(\hat{\theta})$が$\gamma(\theta)$の不偏推定量であるとは限らない。
+    - 例 : 母分散・母標準偏差の推定 -->
