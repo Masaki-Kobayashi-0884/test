@@ -39,7 +39,7 @@ GhostScriptにはパスが通ってないので手動で設定する必要があ
 RStudioを起動し、以下のスクリプトを実行してください。
 
 ```r
-install.packages("tintex" dependencies = TRUE)
+install.packages("tinytex", dependencies = TRUE)
 tinytex::install_tinytex()
 tinytex::tlmgr_install("pdfcrop")
 tinytex::tlmgr_install("texlive-msgmtranslations")
